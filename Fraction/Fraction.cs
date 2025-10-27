@@ -151,12 +151,42 @@ namespace Fraction
 		{
 			return (f1.Numerator * f2.Denominator) <= (f2.Numerator * f1.Denominator);
 		}
-		public static bool operator== (Fraction f1, Fraction f2)
+		//public static bool operator== (Fraction f1, Fraction f2)
+		//{
+		//	return (f1.Numerator * f2.Denominator) == (f2.Numerator * f1.Denominator);
+		//}
+
+		//public static bool operator!= (Fraction f1, Fraction f2)
+		//{
+		//	return !(f1 == f2);
+		//}
+
+		// Переопределение метода Equals()
+		public override bool Equals(object obj)
 		{
-			return (f1.Numerator * f2.Denominator) == (f2.Numerator * f1.Denominator);
+			if (obj == null || GetType() != obj.GetType()) return false;
+			Fraction other = (Fraction)obj;
+			return Numerator == other.Numerator && Denominator == other.Denominator;
 		}
 
-		public static bool operator!= (Fraction f1, Fraction f2)
+		// Переопределение метода GetHashCode()
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (Numerator * 397) ^ Denominator;
+			}
+		}
+
+		// Операторы равенства и неравенства
+		public static bool operator ==(Fraction f1, Fraction f2)
+		{
+			if (ReferenceEquals(f1, f2)) return true;
+			if (ReferenceEquals(f1, null) || ReferenceEquals(f2, null)) return false;
+			return f1.Numerator == f2.Numerator && f1.Denominator == f2.Denominator;
+		}
+
+		public static bool operator !=(Fraction f1, Fraction f2)
 		{
 			return !(f1 == f2);
 		}
