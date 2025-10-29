@@ -14,10 +14,10 @@ namespace Calc2
 		static void Main(string[] args)
 		{
 			Console.Write("Введите арифметическое выражение: ");
-			string expression = "22+33-44/2+8*3";
-			//string expression = Console.ReadLine();
+			//string expression = "22+33-44/2+8*3";
+			string expression = Console.ReadLine();
 			expression = expression.Replace(".", ",");
-			expression = expression.Replace(" ","");
+			expression = expression.Replace(" ", "");
 			Console.WriteLine(expression);
 
 			char[] operators = new char[] { '+', '-', '*', '/' };
@@ -30,19 +30,139 @@ namespace Calc2
 			}
 			Console.WriteLine();
 
-			char[] digits = "0123456789.".ToCharArray();
+			char[] digits = "0123456789.,".ToCharArray();
 			//for (int i = 0; i < digits.Length; i++)
 			//{
 			//	Console.Write($"{digits[i]}\t");
 			//}
-            //Console.WriteLine();
+			//Console.WriteLine();
 			string[] operations = expression.Split(digits);
-			operations = operations.Where(o=> o!="").ToArray();
+			operations = operations.Where(o => o != "").ToArray();
 			for (int i = 0; i < operations.Length; i++)
 			{
 				Console.Write($"{operations[i]}\t");
 			}
-            Console.WriteLine();
+			Console.WriteLine();
+			
+			while(operations.Contains("*") || operations.Contains("/"))
+			{
+				for(int i=0; i < operations.Length; i++)
+				{
+					if (operations[i] == "*")
+					{
+						values[i] = values[i] * values[i+1];
+						for (int j = i + 1; j < operations.Length; j++)
+						{
+							operations[j - 1] = operations[j];
+							values[j] = values[j + 1];
+						}
+						if (operations[operations.Length - 1] != " ")
+						{
+							operations[operations.Length - 1] = " ";
+							values[values.Length - 1] = 0;
+						}
+						for (int k = 0; k < values.Length; k++)
+						{
+							Console.Write(values[k] + "\t");
+						}
+						Console.WriteLine();
+						for (int m = 0; m < operations.Length; m++)
+						{
+							Console.Write(operations[m] + "\t");
+						}
+						Console.WriteLine();
+					}
+					else if (operations[i]=="/")
+					{
+						values[i] = values[i] / values[i+1];
+						for(int j = i + 1;j < operations.Length; j++)
+						{
+							operations[j - 1] = operations[j];
+							values[j] = values[j + 1];
+						}
+						if (operations[operations.Length - 1] != " ")
+						{
+							operations[operations.Length - 1] = " ";
+							values[values.Length - 1] = 0;
+						}
+						for (int k = 0; k < values.Length; k++)
+						{
+							Console.Write(values[k] + "\t");
+						}
+						Console.WriteLine();
+						for (int m = 0; m < operations.Length; m++)
+						{
+							Console.Write(operations[m] + "\t");
+						}
+						Console.WriteLine();
+					}
+					
+				}
+					
+			}
+			
+			while(operations.Contains("+") || operations.Contains("-"))
+			{
+				for(int i = 0; i < operations.Length; i++)
+				{
+					if (operations[i] == "+")
+					{
+						values[0] = values[0]+values[i+1];
+						for (int j = i+1; j < operations.Length; j++)
+						{
+							operations[j - 1] = operations[j];
+							values[j] = values[j + 1];
+						}
+						if (operations[operations.Length - 1] != " ")
+						{
+							operations[operations.Length - 1] = " ";
+							values[values.Length - 1] = 0;
+						}
+						for (int k = 0; k < values.Length; k++)
+						{
+							Console.Write(values[k] + "\t");
+						}
+						Console.WriteLine();
+						for (int m = 0; m < operations.Length; m++)
+						{
+							Console.Write(operations[m] + "\t");
+						}
+						Console.WriteLine();
+						break;
+					}
+					else if (operations[i] == "-")
+					{
+						values[0] = values[0] - values[i+1];
+						for (int j = i+1; j < operations.Length; j++)
+						{
+							operations[j - 1] = operations[j];
+							values[j] = values[j + 1];
+						}
+						if (operations[operations.Length - 1] != " ")
+						{
+							operations[operations.Length - 1] = " ";
+							values[values.Length - 1] = 0;
+						}
+						for (int k = 0; k < values.Length; k++)
+						{
+							Console.Write(values[k] + "\t");
+						}
+						Console.WriteLine();
+						for (int m = 0; m < operations.Length; m++)
+						{
+							Console.Write(operations[m] + "\t");
+						}
+						Console.WriteLine();
+						break;
+					}
+
+				}
+				
+			}
+			Console.WriteLine("Результат: " + values[0]);
+		}
+		
+			
 #if CALC_IF
 			if (expression.Contains('+'))
 				Console.WriteLine($"{values[0]} + {values[1]} = {values[0] + values[1]}");
@@ -66,6 +186,7 @@ namespace Calc2
 #endif
 
 
-		}
 	}
+
 }
+
