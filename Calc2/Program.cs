@@ -49,9 +49,49 @@ namespace Calc2
 			{
 				Console.Write($"{operations[i]}\t");
 			}
-			Console.WriteLine();*/
-			Console.WriteLine(Calculate(expression));
+			Console.WriteLine();
+
+			while (operations[0] != "")
+			{
+				
+				for (int i=0; i < operations.Length; i++)
+				{
+					if (operations[i] == "*" || operations[i] == "/")
+					{
+						if (operations[i] == "*")
+						{
+							values[i] *= values[i + 1];
+						}
+						if (operations[i] == "/")
+						{
+							values[i] /= values[i + 1];
+						}
+						Shift(i);
+					}
+					
+					if (operations[i] == "*" || operations[i] == "/") i--;
+				}
+				for (int i=0; i < operations.Length; i++)
+				{
+					if (operations[i] == "+" || operations[i] == "-")
+					{
+						if (operations[i] == "+")
+						{
+							values[i] += values[i + 1];
+						}
+						if (operations[i] == "-")
+						{
+							values[i] -= values[i + 1];
+						}
+						Shift(i);
+					}
+					
+					if (operations[i] == "+" || operations[i] == "-") i--;
+				}
+			}
 			
+			Console.WriteLine(values[0]);
+		
 
 
 #if HOME_CHECK
@@ -201,42 +241,7 @@ namespace Calc2
 			while (operations[0] != "")
 			{
 
-				for (int i = 0; i < operations.Length; i++)
-				{
-					if (operations[i] == "*" || operations[i] == "/")
-					{
-						if (operations[i] == "*")
-						{
-							values[i] *= values[i + 1];
-						}
-						if (operations[i] == "/")
-						{
-							values[i] /= values[i + 1];
-						}
-						Shift(i);
-					}
 
-					if (operations[i] == "*" || operations[i] == "/") i--;
-				}
-				for (int i = 0; i < operations.Length; i++)
-				{
-					if (operations[i] == "+" || operations[i] == "-")
-					{
-						if (operations[i] == "+")
-						{
-							values[i] += values[i + 1];
-						}
-						if (operations[i] == "-")
-						{
-							values[i] -= values[i + 1];
-						}
-						Shift(i);
-					}
-
-					if (operations[i] == "+" || operations[i] == "-") i--;
-				}
-			}
-			return values[0];
 		}
 		static void Shift(int index)
 		{
